@@ -6,7 +6,7 @@ const AuthScreen = () => {
     const {localSignin} = useContext(AuthContext);
 
     useEffect(() => {
-        //Automatically Signin if token exist on device
+        //Automatically run when the App is launched, and it Signs In automatically if token exist on device
         localSignin();
     }, []);
 

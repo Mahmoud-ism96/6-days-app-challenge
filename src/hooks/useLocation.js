@@ -9,10 +9,11 @@ export default (callback) => {
         try{
             //Request Location Permission
             await requestForegroundPermissionsAsync();
+            //Update current location 
             await watchPositionAsync({
                 accuracy: Accuracy.BestForNavigation,
                 timeInterval: 100,
-                distanceInterval:10,
+                distanceInterval:1,
             }, 
                 callback
             );

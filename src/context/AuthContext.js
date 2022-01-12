@@ -5,7 +5,7 @@ import { navigate } from "../NavigationRef";
 
 
 const authReducer = (state, action) => {
-    //Takes action when app state is changed
+    //Triggers an action based on the App state
     switch (action.type){
         case "add_error":
             return {...state, errorMessage: action.payload};
@@ -69,4 +69,7 @@ const clearErrorMessage = (dispatch) => () => {
     dispatch({ type: "clear_error_message" });
   };
 
-export const {Provider, Context} = CreateDataContext(authReducer, {signup, signin, localSignin, signout, clearErrorMessage}, {token: null, errorMessage: ''});
+export const {Provider, Context} = CreateDataContext(
+    authReducer, 
+    {signup, signin, localSignin, signout, clearErrorMessage}, 
+    {token: null, errorMessage: ''});

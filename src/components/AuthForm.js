@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 
 const AuthForm = ({headerText, errorMessage, onSubmit, buttonTitle }) => {
+    //Reusable Form for Sign in/Up Screen
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -32,8 +33,7 @@ const AuthForm = ({headerText, errorMessage, onSubmit, buttonTitle }) => {
             />
             {errorMessage ?
             (<Text style={styles.errorMessage}>{errorMessage}</Text>)
-            : null
-            }
+            : null}
         </>
     );
 

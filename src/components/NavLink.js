@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, StyleSheet, View} from 'react-native';
 import { withNavigation } from "react-navigation";
 
 const NavLink = ({navigation, preText, text, screenName}) => {
+    //Reusable Navigation Link for Sign In/Up Screen
     return (
         <View style={{flexDirection:"row",justifyContent: 'center'}}>
             <Text>{preText}</Text>
