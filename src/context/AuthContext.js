@@ -9,31 +9,64 @@ const authReducer = (state, action) => {
     switch (action.type){
         case "add_error":
             return {...state, errorMessage: action.payload};
-        case "signup":
+        case "signin":
             return {errorMessage:'', token: action.payload};
+        case "signout":
+            return {token:null, errorMessage:''};
+        case "clear_error_message":
+            return { ...state, errorMessage: "" };
         default: return state;
+        
     }
 };
 
 const signup = (dispatch) => async ({email, password}) => { 
     //Send request to Sign Up
         try{
-            //Verifying User info incase of duplicate Email
+            //Verifying User info incase of duplicate Email or wrong Password
             const response = await trackerApi.post('/signup',{email, password});
             await AsyncStorage.setItem('token', response.data.token);
-            dispatch({type:'signup', payload:response.data.token})
-            navigate('mainFlow')
+            dispatch({type:'signin', payload:response.data.token});
+            navigate('mainFlow');
         } catch (err){
-            dispatch({type:'add_error', payload:'Something went wrong'})
+            dispatch({type:'add_error', payload:'Wrong Email or Password'});
         }        
     };
 
-const signin = (dispatch) => ({email, password}) => {
-      //Send request to Sign in  
+const signin = (dispatch) => async ({email, password}) => {
+      //Send request to Sign in
+      try{
+        //Verifying User info incase of wrong Email or Password
+        const response = await trackerApi.post('/signin',{email, password});
+        await AsyncStorage.setItem('token', response.data.token);
+        dispatch({type:'signin', payload:response.data.token});
+        navigate('mainFlow');
+    } catch (err){
+        dispatch({type:'add_error', payload:'Wrong Email or Password'});
+    }  
     };
 
-const signout = (dispatch) => () => {
-    //Send request to Sign out
+const localSignin = (dispatch) => async () => {
+    //Send request to Sign In automatically, if account was already Signed In
+    const token = await AsyncStorage.getItem('token');
+    if(token){
+        dispatch({type:'signin', payload:token});
+        navigate('mainFlow');
+    } else{
+        navigate('Signup');
+    }
 };
 
-export const {Provider, Context} = CreateDataContext(authReducer, {signup, signin, signout}, {token: null, errorMessage: ''});
+const signout = (dispatch) => async () => {
+    //Send request to Sign out
+    await AsyncStorage.removeItem('token');
+    dispatch({type:'signout'})
+    navigate('loginFlow');
+};
+
+const clearErrorMessage = (dispatch) => () => {
+    //Clear the error message from the screen
+    dispatch({ type: "clear_error_message" });
+  };
+
+export const {Provider, Context} = CreateDataContext(authReducer, {signup, signin, localSignin, signout, clearErrorMessage}, {token: null, errorMessage: ''});
