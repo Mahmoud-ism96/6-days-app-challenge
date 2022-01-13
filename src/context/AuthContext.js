@@ -5,7 +5,7 @@ import { navigate } from "../NavigationRef";
 
 
 const authReducer = (state, action) => {
-    //Triggers an action based on the App state
+    //Triggers an Action based on the State received
     switch (action.type){
         case "add_error":
             return {...state, errorMessage: action.payload};
@@ -21,7 +21,7 @@ const authReducer = (state, action) => {
 };
 
 const signup = (dispatch) => async ({email, password}) => { 
-    //Send request to Sign Up
+    //Send an action to the Reducer to Sign Up
         try{
             //Verifying User info incase of duplicate Email or wrong Password
             const response = await trackerApi.post('/signup',{email, password});
@@ -34,7 +34,7 @@ const signup = (dispatch) => async ({email, password}) => {
     };
 
 const signin = (dispatch) => async ({email, password}) => {
-      //Send request to Sign in
+      //Send an Action to the Reducer to Sign in
       try{
         //Verifying User info incase of wrong Email or Password
         const response = await trackerApi.post('/signin',{email, password});
@@ -47,7 +47,7 @@ const signin = (dispatch) => async ({email, password}) => {
     };
 
 const localSignin = (dispatch) => async () => {
-    //Send request to Sign In automatically, if account was already Signed In
+    //Send an Action to the Reducer to Sign In automatically, if Account was already Signed In
     const token = await AsyncStorage.getItem('token');
     if(token){
         dispatch({type:'signin', payload:token});
@@ -58,14 +58,14 @@ const localSignin = (dispatch) => async () => {
 };
 
 const signout = (dispatch) => async () => {
-    //Send request to Sign out
+    //Send an Action to the Reducer to Sign out
     await AsyncStorage.removeItem('token');
     dispatch({type:'signout'})
     navigate('loginFlow');
 };
 
 const clearErrorMessage = (dispatch) => () => {
-    //Clear the error message from the screen
+    //Send an Action to Reducer to clear the error message from the Sign Up/In screen
     dispatch({ type: "clear_error_message" });
   };
 

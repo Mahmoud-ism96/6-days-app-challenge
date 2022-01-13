@@ -1,30 +1,49 @@
 import {useState, useEffect} from 'react';
-import { requestForegroundPermissionsAsync, requestBackgroundPermissionsAsync, requestPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
+import { requestForegroundPermissionsAsync, requestBackgroundPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 
-export default (callback) => {
+export default (shouldTrack, callback) => {
+    //Reusable hook to update location
     const [err, setErr] = useState(null);
-
-    const startRecording = async () => {
-        //Reusable hook to update the current location
-        try{
-            //Request Location Permission
-            await requestForegroundPermissionsAsync();
-            //Update current location 
-            await watchPositionAsync({
-                accuracy: Accuracy.BestForNavigation,
-                timeInterval: 100,
-                distanceInterval:1,
-            }, 
-                callback
-            );
-        } catch (e){
-            setErr(e);
-        }
-    };
-
+  
     useEffect(() => {
-        startRecording();
-    },[]); 
+        //Start/Stop tracking every time the User presses Start/Pause, or Stop button
+        let tracker;
+        const startRecording = async () => {
+            try{
+                //Request Location Permissions (if its not already obtained)
+                const foreGranted = await requestForegroundPermissionsAsync();
+                const backGranted =await requestBackgroundPermissionsAsync();
+                if (!foreGranted || !backGranted) {
+                    //Checks if Permissions are granted
+                    throw new Error('Location permission not granted');
+                  }
+                tracker = await watchPositionAsync({
+                    //Gets current location 
+                    accuracy: Accuracy.BestForNavigation,
+                    timeInterval: 1000,
+                    distanceInterval:10,
+                }, 
+                    callback
+                );
+            } catch (e){
+                setErr(e);
+            }
+        };
+    
+        if(shouldTrack){
+            startRecording();
+        } else{
+            if(tracker){
+                tracker.remove();
+            }
+            tracker = null;   
+        }
+        return () => {
+            if(tracker){
+                tracker.remove();
+            }
+        };
+    },[shouldTrack, callback]); 
 
     return [err];
 };
