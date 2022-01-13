@@ -7,8 +7,6 @@ import { Context as LocationContext } from '../context/LocationContext';
 const Map = () => {
     const {state: {currentLocation, locations}} = useContext(LocationContext);
 
-    console.log(locations);
-
     if(!currentLocation){
         return <ActivityIndicator size="large" style={{marginTop: 200}}/>;
     };

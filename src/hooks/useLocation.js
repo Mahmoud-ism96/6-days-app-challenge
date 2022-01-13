@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { requestForegroundPermissionsAsync, requestBackgroundPermissionsAsync, watchPositionAsync, Accuracy } from 'expo-location';
 
 export default (shouldTrack, callback) => {
-    //Reusable hook to update location
+    //Hook used to update location
     const [err, setErr] = useState(null);
   
     useEffect(() => {
