@@ -16,6 +16,7 @@ const AuthForm = ({headerText, errorMessage, onSubmit, buttonTitle }) => {
             onChangeText={setEmail} 
             autoCapitalize="none" 
             autoCorrect={false} 
+            placeholder={'Enter Your Email'}
             />
             <Input 
             label="Password"
@@ -23,6 +24,7 @@ const AuthForm = ({headerText, errorMessage, onSubmit, buttonTitle }) => {
             onChangeText={setPassword} 
             autoCapitalize="none" 
             autoCorrect={false} 
+            placeholder={'Enter Your Password'}
             secureTextEntry
             />
             <Button 

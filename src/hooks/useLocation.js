@@ -7,7 +7,7 @@ export default (shouldTrack, callback) => {
   
     useEffect(() => {
         //Start/Stop tracking every time the User presses Start/Pause, or Stop button
-        let tracker;
+        let tracker, trackBackground;
         const startRecording = async () => {
             try{
                 //Request Location Permissions (if its not already obtained)
@@ -20,11 +20,11 @@ export default (shouldTrack, callback) => {
                 tracker = await watchPositionAsync({
                     //Gets current location 
                     accuracy: Accuracy.BestForNavigation,
-                    timeInterval: 1000,
-                    distanceInterval:10,
+                    timeInterval: 2000,
+                    distanceInterval:5,
                 }, 
                     callback
-                );
+                );                
             } catch (e){
                 setErr(e);
             }

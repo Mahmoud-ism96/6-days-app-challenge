@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "thirdwayv-running",
+    "name": "Thirdwayv Running",
+    "description": "Thirdwayv React Native Activity Tracking Challenge",
     "slug": "thirdwayv-running",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.mahmoud_ism.thirdwayv_running",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

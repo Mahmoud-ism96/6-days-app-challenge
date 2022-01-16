@@ -1,24 +1,33 @@
-import React, {useContext, useEffect} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
+import LottieView from 'lottie-react-native';
 
-const AuthScreen = () => {
+
+const AuthScreen = ({navigation}) => {
     const {localSignin} = useContext(AuthContext);
 
-    useEffect(() => {
-        //Automatically run when the App is launched, and it Signs In automatically if token exist on device
-        localSignin();
-    }, []);
-
-    return (
-        <View style={styles.container}>
-            <ImageBackground 
-            source={require('../images/runIcon.png')} 
-            style={styles.image} 
-            />
-        </View>
-    );
-}
+            return (
+            <View
+                style={{
+                    flex: 1,
+                    backgroundColor: '#459c84'
+                }}
+            >
+                <LottieView
+                    source={require('../images/splash.json')}
+                    autoPlay
+                    loop={false}
+                    speed={0.5}
+                    onAnimationFinish={() => {
+                        localSignin();
+                    }}
+                />
+            </View>
+            )
+    
+    
+};
 
 const styles = StyleSheet.create({
     container: {

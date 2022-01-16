@@ -13,6 +13,8 @@ import {Provider as AuthProvider} from './src/context/AuthContext';
 import {Provider as LocationProvider} from './src/context/LocationContext';
 import {Provider as TrackProvider} from './src/context/TrackContext';
 import { setNavigator } from './src/NavigationRef';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+
 
 const switchNavigator = createSwitchNavigator({
   AuthScreen: AuthScreen,
@@ -21,13 +23,35 @@ const switchNavigator = createSwitchNavigator({
     Signin: SigninScreen
   }),
   mainFlow: createBottomTabNavigator({
+    trackCreateFlow: createStackNavigator({
+      TrackCreate: TrackCreateScreen,
+    },{
+    navigationOptions: {
+      title: 'New Session', 
+      tabBarIcon: <MaterialCommunityIcons name="run-fast" size={24} color="#319177" />
+    }}),
     trackFlow: createStackNavigator({
       TrackHistory: TrackHistoryScreen,
       TrackDetail: TrackDetailScreen
-    }),
-    TrackCreate: TrackCreateScreen,
-    Account: AccountScreen
-  })
+    },{
+      navigationOptions: {
+        title: 'Track History', 
+        tabBarIcon: <MaterialCommunityIcons name="history" size={24} color="#319177" />
+      }}),
+    accountFlow: createStackNavigator({
+      Account: AccountScreen,
+    },{
+      navigationOptions: {
+        title: 'Account', 
+        tabBarIcon: <MaterialCommunityIcons name="account" size={24} color="#319177" />
+      }}),
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: '#319177',
+    }
+  }
+  )
 });
 
 const App = createAppContainer(switchNavigator);

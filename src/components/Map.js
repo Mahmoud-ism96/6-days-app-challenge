@@ -11,27 +11,21 @@ const Map = () => {
         return <ActivityIndicator size="large" style={{marginTop: 200}}/>;
     };
 
-    initialLocation = {
-        //An Initial Location for live testing
-        longitude: 31.438079,
-        latitude: 30.007743,
-      };
-
     return (
         <MapView 
         style={styles.map}
         initialRegion={{
-        ...currentLocation.coords,
-        latitudeDelta:0.01,
-        longitudeDelta:0.01,
+            ...currentLocation.coords,
+            latitudeDelta:0.001,
+            longitudeDelta:0.001,
         }}>
             <Circle
                 center={currentLocation.coords}
-                radius={5}
+                radius={3}
                 strokeColor="rgba(49,145,119, 1)"
                 fillColor="rgba(110,178,159, 0.2)"
             />
-            <Polyline coordinates={locations.map(location => location.coords)}/>
+            <Polyline coordinates={locations.map((location) => location.coords)}/>
         </MapView>
     );
 };
