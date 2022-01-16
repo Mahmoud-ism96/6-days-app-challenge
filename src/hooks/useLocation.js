@@ -19,9 +19,9 @@ export default (shouldTrack, callback) => {
                   }
                 tracker = await watchPositionAsync({
                     //Gets current location 
+                    enableHighAccuracy:true,
                     accuracy: Accuracy.BestForNavigation,
-                    timeInterval: 2000,
-                    distanceInterval:5,
+                    distanceInterval:1,
                 }, 
                     callback
                 );                

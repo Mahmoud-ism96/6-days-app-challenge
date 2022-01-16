@@ -18,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mody21000.thirdwayv-running"
     },
     "android": {
       "package": "com.mahmoud_ism.thirdwayv_running",
